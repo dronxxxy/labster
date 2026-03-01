@@ -17,7 +17,7 @@ FileContent *fileContentNewIn(MemPool *mempool, Slice name, Slice content) {
 FileContent *fileContentFromFile(MemPool *mempool, Logger *logger, const char *path) {
   FILE *file = fopen(path, "r");
   if (!file) {
-    loggerLog(logger, LOGGER_ERROR, "не удалось открыть файл: %ошибка");
+    loggerLog(logger, LOGGER_ERROR, "failed to open the file: %errno");
     return NULL;
   }
   fseek(file, 0, SEEK_END);

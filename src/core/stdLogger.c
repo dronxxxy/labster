@@ -6,9 +6,9 @@
 
 static inline const char *getPrefixFromLevel(LoggerLevel level) {
   switch (level) {
-    case LOGGER_ERROR: return "ОШИБКА";
-    case LOGGER_WARNING: return "ПРЕДУПРЕЖДЕНИЕ";
-    case LOGGER_INFO: return "ИНФОРМАЦИЯ";
+    case LOGGER_ERROR: return "ERROR";
+    case LOGGER_WARNING: return "WARNING";
+    case LOGGER_INFO: return "INFO";
   }
 }
 
@@ -38,7 +38,7 @@ static inline void stdLog(LoggerLevel level, const char *message) {
 static inline void stdLogAt(LoggerLevel level, FilePosition position, const char *message) {
   FILE *file = getFileFromLevel(level);
   stdLog(level, message);
-  fprintf(file, "в файле ");
+  fprintf(file, "at file ");
   fwrite(position.content->name.pointer, 1, position.content->name.length, file);
   fprintf(file, ":%ld:\n", position.line);
   FileSelection selection = filePositionSelect(&position);
