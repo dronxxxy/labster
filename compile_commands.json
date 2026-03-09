@@ -18,4 +18,14 @@
   "directory": "/var/home/dronxxxy/Projects/labster",
   "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/main.cpp.o", "src/main.cpp"],
   "file": "src/main.cpp"
+},
+{
+  "directory": "/var/home/dronxxxy/Projects/labster",
+  "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/lexer/lexer.cpp.o", "src/lexer/lexer.cpp"],
+  "file": "src/lexer/lexer.cpp"
+},
+{
+  "directory": "/var/home/dronxxxy/Projects/labster",
+  "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/lexer/token.cpp.o", "src/lexer/token.cpp"],
+  "file": "src/lexer/token.cpp"
 }]

@@ -7,10 +7,10 @@
 namespace labster {
   class FileContent {
     public:
-      const std::string_view filename;
+      const std::string filename;
       const Utf8String string;
 
-      explicit FileContent(std::string_view filename, Utf8String string);
+      explicit FileContent(std::string filename, Utf8String &&string);
   };
 
   using FileContentRef = std::shared_ptr<FileContent>;

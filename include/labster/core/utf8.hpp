@@ -1,6 +1,8 @@
 #pragma once
 
+#include <format>
 #include <ostream>
+#include <sstream>
 #include <string_view>
 
 namespace labster {
@@ -8,12 +10,16 @@ namespace labster {
     uint32_t value;
 
     bool operator==(char c) const;
-
     bool operator>=(char c) const;
     bool operator<=(char c) const;
-
     bool operator>(char c) const;
     bool operator<(char c) const;
+
+    bool operator==(char16_t c) const;
+    bool operator>=(char16_t c) const;
+    bool operator<=(char16_t c) const;
+    bool operator>(char16_t c) const;
+    bool operator<(char16_t c) const;
   };
   
   class Utf8StringIterator {
@@ -60,3 +66,20 @@ namespace labster {
 
   std::ostream& operator<<(std::ostream& os, labster::Utf8Char c);
 }
+
+template <>
+struct std::formatter<labster::Utf8Char> {
+  constexpr auto parse(std::format_parse_context& ctx) {
+    auto it = ctx.begin();
+    while (it != ctx.end() && *it != '}') {
+      ++it;
+    }
+    return it;
+  }
+
+  auto format(const labster::Utf8Char& c, std::format_context& ctx) const {
+    std::ostringstream buf;
+    buf << c;
+    return std::format_to(ctx.out(), "{}", buf.str());
+  }
+};

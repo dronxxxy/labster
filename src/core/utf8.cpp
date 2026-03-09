@@ -2,25 +2,17 @@
 
 using namespace labster;
 
-bool Utf8Char::operator==(char c) const {
-  return this->value == c;  
-}
+bool Utf8Char::operator==(char c) const { return this->value == c;   }
+bool Utf8Char::operator>=(char c) const { return this->value >= c;   }
+bool Utf8Char::operator<=(char c) const { return this->value <= c;   }
+bool Utf8Char::operator>(char c) const { return this->value > c;   }
+bool Utf8Char::operator<(char c) const { return this->value < c;   }
 
-bool Utf8Char::operator>=(char c) const {
-  return this->value >= c;  
-}
-
-bool Utf8Char::operator<=(char c) const {
-  return this->value <= c;  
-}
-
-bool Utf8Char::operator>(char c) const {
-  return this->value > c;  
-}
-
-bool Utf8Char::operator<(char c) const {
-  return this->value < c;  
-}
+bool Utf8Char::operator==(char16_t c) const { return this->value == c;   }
+bool Utf8Char::operator>=(char16_t c) const { return this->value >= c;   }
+bool Utf8Char::operator<=(char16_t c) const { return this->value <= c;   }
+bool Utf8Char::operator>(char16_t c) const { return this->value > c;   }
+bool Utf8Char::operator<(char16_t c) const { return this->value < c;   }
   
 Utf8StringIterator::Utf8StringIterator(std::string_view::const_iterator begin, std::string_view::const_iterator end) : position(begin), end(end) {
   readChar();

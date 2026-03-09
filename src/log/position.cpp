@@ -4,7 +4,7 @@
 
 using namespace labster;
 
-FileContent::FileContent(std::string_view filename, Utf8String string) : filename(filename), string(string) {}
+FileContent::FileContent(std::string filename, Utf8String &&string) : filename(filename), string(std::move(string)) {}
 
 FilePosition::FilePosition(const FileContentRef content, size_t offset, size_t length) :
   content(content), offset(offset), length(length) {
@@ -26,34 +26,65 @@ void FilePosition::resolvePosition() {
 }
 
 FilePositionHighlight FilePosition::getHighlight() const {
+  const char* rawData = this->content->string.begin().value();
+  const char* rawEnd = this->content->string.end().value();
+  
+  const char* lineStart = rawData;
+  const char* highlightBegin = rawEnd;
+  const char* highlightEnd = rawEnd;
+  const char* lineEnd = rawEnd;
+  
+  bool foundOffset = false;
   size_t i = 0;
-  std::string_view::const_iterator
-    lineStart = this->content->string.begin().value(),
-    highlightBegin, highlightEnd, lineEnd;
-  bool lineEnded = false;
+
   for (
     Utf8StringIterator iterator = this->content->string.begin();
-    iterator != ++this->content->string.end();
+    iterator != this->content->string.end();
     ++iterator, i++
   ) {
+    const char* currentPtr = iterator.value();
+    
+    if (currentPtr >= rawEnd) break;
+
     if (i < this->offset) {
-      if (*iterator == '\n') lineStart = iterator.value();
+      if (*iterator == '\n') {
+        const char* nextPtr = currentPtr + 1;
+        lineStart = (nextPtr < rawEnd) ? nextPtr : rawEnd;
+      }
       continue;
     }
-    if (i == this->offset) highlightBegin = iterator.value();
-    if (i <= this->offset + this->length) highlightEnd = iterator.value();
-    if (i >= this->offset + this->length && *iterator == '\n') {
-      lineEnded = true;
-      break;
+
+    if (!foundOffset) {
+      highlightBegin = currentPtr;
+      foundOffset = true;
     }
-    lineEnd = iterator.value();
+
+    if (i == this->offset + this->length) highlightEnd = currentPtr;
+
+    if (i >= this->offset + this->length) {
+      if (*iterator == '\n') {
+        lineEnd = currentPtr;
+        break;
+      }
+      Utf8StringIterator nextIt = iterator;
+      ++nextIt;
+      if (nextIt != this->content->string.end()) lineEnd = nextIt.value();
+    }
   }
-  if (!lineEnded) lineEnd = this->content->string.end().value();
+  
+  if (!foundOffset) {
+    highlightBegin = rawEnd;
+    highlightEnd = rawEnd;
+  }
+  
+  if (highlightBegin > rawEnd) highlightBegin = rawEnd;
+  if (highlightEnd > rawEnd) highlightEnd = rawEnd;
+  if (lineEnd > rawEnd) lineEnd = rawEnd;
+  if (lineStart > rawEnd) lineStart = rawEnd;
 
   return {
-    std::string_view(lineStart, highlightBegin),
-    std::string_view(highlightBegin, highlightEnd),
-    std::string_view(highlightEnd, lineEnd),
+    std::string_view(lineStart, highlightBegin - lineStart),
+    std::string_view(highlightBegin, highlightEnd - highlightBegin),
+    std::string_view(highlightEnd, lineEnd - highlightEnd),
   };
 }
-
