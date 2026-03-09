@@ -1,0 +1,21 @@
+[
+{
+  "directory": "/var/home/dronxxxy/Projects/labster",
+  "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/log/position.cpp.o", "src/log/position.cpp"],
+  "file": "src/log/position.cpp"
+},
+{
+  "directory": "/var/home/dronxxxy/Projects/labster",
+  "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/log/stdLogger.cpp.o", "src/log/stdLogger.cpp"],
+  "file": "src/log/stdLogger.cpp"
+},
+{
+  "directory": "/var/home/dronxxxy/Projects/labster",
+  "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/core/utf8.cpp.o", "src/core/utf8.cpp"],
+  "file": "src/core/utf8.cpp"
+},
+{
+  "directory": "/var/home/dronxxxy/Projects/labster",
+  "arguments": ["/usr/lib64/ccache/g++", "-c", "-m64", "-g", "-O0", "-std=c++23", "-Iinclude", "-fsanitize=address", "-o", "build/.objs/labster/linux/x86_64/debug/src/main.cpp.o", "src/main.cpp"],
+  "file": "src/main.cpp"
+}]
